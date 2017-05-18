@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Baking King</string>
+    <string name="launcher_fragment_tag" formatted="false" translatable="false">launcher_fragment</string>
+    <string name="ingredients_fragment_tag" formatted="false" translatable="false">ingredients_fragment</string>
+    <string name="steps_description_fragment_tag" formatted="false" translatable="false">steps_description_fragment</string>
+    <string name="steps_detail_fragment_tag" formatted="false" translatable="false">steps_detail_fragment</string>
+    <string name="recipe_video_fragment_tag" formatted="false" translatable="false">recipe_video_fragment</string>
+    <string name="no_internet_error_msg" formatted="false" translatable="true">Please check internet connection on device and try again.</string>
+    <string name="no_recipe_error_msg" formatted="false" translatable="true">Currently there is no recipe available, try after sometime.</string>
+    <string name="server_error_msg" formatted="false" translatable="true">Temporary system is unavailable, try after sometime.</string>
+    <string name="ok" formatted="false" translatable="true">OK</string>
+    <string name="recipe_request_tag" formatted="false" translatable="false">recipe_request</string>
+</resources>
