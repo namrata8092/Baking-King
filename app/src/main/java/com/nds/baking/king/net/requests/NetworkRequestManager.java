@@ -2,6 +2,7 @@ package com.nds.baking.king.net.requests;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -9,9 +10,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import com.nds.baking.king.converters.RecipeConverter;
 import com.nds.baking.king.models.RecipeResponseModel;
 import com.nds.baking.king.utils.ValidationUtil;
@@ -26,7 +24,7 @@ import java.lang.ref.WeakReference;
 
 public class NetworkRequestManager {
 
-    private static final String TAG = NetworkRequestManager.class.getSimpleName();
+    private static final String TAG = "Test"+NetworkRequestManager.class.getSimpleName();
     public static final String REQUEST_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
     private static NetworkRequestManager mInstance;
     private RequestQueue mRequestQueue;
@@ -80,10 +78,8 @@ public class NetworkRequestManager {
                 }
                 RecipeResponseModel responseModel = null;
                 if (ValidationUtil.isValidString(response)) {
-                    JsonParser jsonParser = new JsonParser();
-                    JsonElement jsonElement = jsonParser.parse(response);
-                    JsonArray jsonArray = jsonElement.getAsJsonArray();
-                    responseModel = RecipeConverter.convert(jsonArray.toString());
+                    Log.d(TAG, "received valid response ");
+                    responseModel = RecipeConverter.convert(response);
                 }
                 if (requester != null && responseModel != null) {
                     requester.onSuccess(responseModel);

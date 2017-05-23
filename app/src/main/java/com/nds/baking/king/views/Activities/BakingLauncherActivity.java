@@ -18,7 +18,7 @@ import com.nds.baking.king.views.Fragments.RecipeCollectionFragment;
 
 import java.lang.ref.WeakReference;
 
-public class BakingLauncherActivity extends AppCompatActivity{
+public class BakingLauncherActivity extends AppCompatActivity {
     private ProgressBar mProgressBar;
     private BakingApplication mBakingApplication;
     private NetworkRequestManager mNetworkRequestManager;
@@ -31,7 +31,7 @@ public class BakingLauncherActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_baking_launcher);
-        mProgressBar = (ProgressBar)findViewById(R.id.progress);
+        mProgressBar = (ProgressBar) findViewById(R.id.progress);
 
         mBakingLauncherActivity = BakingLauncherActivity.this;
         mBakingApplication = (BakingApplication) mBakingLauncherActivity.getApplication();
@@ -39,20 +39,28 @@ public class BakingLauncherActivity extends AppCompatActivity{
 
         mFragmentManager = getSupportFragmentManager();
 
-        loadAppropriateFragment(mNetworkRequestManager);
+        if (savedInstanceState != null) {
+            return;
+        } else {
+            loadAppropriateFragment(mNetworkRequestManager);
+        }
 
     }
 
     private void loadAppropriateFragment(NetworkRequestManager mNetworkRequestManager) {
 
-        if(!NetworkUtil.isNetworkAvailable(getApplicationContext())){
+        if (!NetworkUtil.isNetworkAvailable(getApplicationContext())) {
             ErrorMessageFragment errorMessageFragment =
                     ErrorMessageFragment.newInstance(getResources().getString(R.string.no_internet_error_msg));
-            mFragmentManager.beginTransaction().replace(R.id.main_container, errorMessageFragment);
-        }else{
+            if (!isFinishing()) {
+                mFragmentManager.beginTransaction().replace(R.id.main_container, errorMessageFragment).commit();
+            }
+        } else {
             showProgressBar();
-            mNetworkRequestManager.getRecipeList(new WeakReference<NetworkRequester> (bakingNetworkRequster), NetworkRequestManager.REQUEST_URL,
-                    getResources().getString(R.string.recipe_request_tag));
+            if (!isFinishing()) {
+                mNetworkRequestManager.getRecipeList(new WeakReference<NetworkRequester>(bakingNetworkRequster), NetworkRequestManager.REQUEST_URL,
+                        getResources().getString(R.string.recipe_request_tag));
+            }
         }
 
     }
@@ -60,7 +68,7 @@ public class BakingLauncherActivity extends AppCompatActivity{
     private NetworkRequester bakingNetworkRequster = new NetworkRequester() {
         @Override
         public void onFailure(Throwable error) {
-            Log.d("Test","error "+error);
+            Log.d("Test", "error " + error);
             hideProgressBar();
             ErrorMessageFragment errorMessageFragment =
                     ErrorMessageFragment.newInstance(getResources().getString(R.string.server_error_msg));
@@ -75,11 +83,11 @@ public class BakingLauncherActivity extends AppCompatActivity{
         }
     };
 
-    private void showProgressBar(){
+    private void showProgressBar() {
         mProgressBar.setVisibility(View.VISIBLE);
     }
 
-    private void hideProgressBar(){
+    private void hideProgressBar() {
         mProgressBar.setVisibility(View.GONE);
     }
 

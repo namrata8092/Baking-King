@@ -3,7 +3,7 @@ package com.nds.baking.king.net.responses;
 import com.google.gson.annotations.SerializedName;
 import com.nds.baking.king.net.tos.Recipe;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Namrata Shah on 5/9/2017.
@@ -12,13 +12,13 @@ import java.util.ArrayList;
 public class RecipeResponse {
 
     @SerializedName("array")
-    private ArrayList<Recipe> recipeList;
+    private List<Recipe> recipeList;
 
-    public ArrayList<Recipe> getRecipeList() {
+    public List<Recipe> getRecipeList() {
         return recipeList;
     }
 
-    public void setRecipeList(ArrayList<Recipe> recipeList) {
+    public void setRecipeList(List<Recipe> recipeList) {
         this.recipeList = recipeList;
     }
 

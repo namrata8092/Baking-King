@@ -34,7 +34,7 @@ public class RecipeCollectionAdapter extends RecyclerView.Adapter<RecipeCollecti
     @Override
     public RecipeCollectionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-        View gridCellView = layoutInflater.inflate(R.layout.recipe_grid_cell, parent);
+        View gridCellView = layoutInflater.inflate(R.layout.recipe_grid_cell, parent, false);
         return new RecipeCollectionViewHolder(gridCellView);
     }
 
@@ -43,7 +43,7 @@ public class RecipeCollectionAdapter extends RecyclerView.Adapter<RecipeCollecti
         RecipeModel recipeModel = mRecipeModels.get(position);
         holder.mRecipeTitleTextView.setText(recipeModel.getRecipeName());
         if(recipeModel.isImgURL())
-            Glide.with(mContext).load(recipeModel.getRecipeImgURL()).error(R.mipmap.ic_launcher).into(holder.mRecipeIcon);
+            Glide.with(mContext).load(recipeModel.getRecipeImgURL()).error(R.drawable.ic_launcher).into(holder.mRecipeIcon);
     }
 
     @Override

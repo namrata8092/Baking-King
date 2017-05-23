@@ -1,12 +1,11 @@
 package com.nds.baking.king.views.Fragments;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import android.widget.AdapterView;
 import com.nds.baking.king.R;
 import com.nds.baking.king.models.RecipeModel;
 import com.nds.baking.king.models.RecipeResponseModel;
+import com.nds.baking.king.views.Activities.RecipeIngredientStepsActivity;
 import com.nds.baking.king.views.adapter.RecipeCollectionAdapter;
 
 import java.util.List;
@@ -26,11 +26,15 @@ import java.util.List;
 public class RecipeCollectionFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private static final String RECIPE_COLLECTION_BUNDLE_KEY = "recipes";
+    private static final String SELECTED_RECIPE_BUNDLE_KEY = "selectedRecipe";
+    private static final String SELECTED_RECIPE_INDEX_KEY = "selectedRecipeIndex";
+    private static final String RECIPE_BUNDLE="recipeBundle";
     private RecipeResponseModel recipeResponseModel;
     private List<RecipeModel> recipes;
     private RecyclerView recipeCards;
     private RecipeCollectionAdapter recipeCollectionAdapter;
     private GridLayoutManager mGridLayoutManager;
+    private int mSelectedRecipeIndex = 0;
 
     public static RecipeCollectionFragment newInstance(RecipeResponseModel responseModel){
         RecipeCollectionFragment fragment = new RecipeCollectionFragment();
@@ -45,7 +49,7 @@ public class RecipeCollectionFragment extends Fragment implements AdapterView.On
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View recipeCollectionView = inflater.inflate(R.layout.recipe_collection_fragment, container, false);
         recipeCards = (RecyclerView)recipeCollectionView.findViewById(R.id.recipeCards);
-        mGridLayoutManager = new GridLayoutManager(getContext(), getCellCount(getContext()));
+        mGridLayoutManager = new GridLayoutManager(getContext(), getResources().getInteger(R.integer.no_of_grid_cells));
         recipeCards.setLayoutManager(mGridLayoutManager);
         recipeCollectionAdapter = new RecipeCollectionAdapter(getContext(), recipes, this);
         recipeCards.setAdapter(recipeCollectionAdapter);
@@ -53,33 +57,32 @@ public class RecipeCollectionFragment extends Fragment implements AdapterView.On
         return recipeCollectionView;
     }
 
-    private int getCellCount(Context context) {
-        int cellCount = 0;
-        DisplayMetrics displayMetrics = (DisplayMetrics)context.getResources().getDisplayMetrics();
-        int width = displayMetrics.widthPixels;
-        if(width < 400){
-            cellCount = 1;
-        }else if(width <= 600){
-            cellCount = 3;
-        }else{
-            cellCount = 5;
-        }
-        return cellCount;
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState != null && savedInstanceState.containsKey(RECIPE_COLLECTION_BUNDLE_KEY)){
-            recipeResponseModel = savedInstanceState.getParcelable(RECIPE_COLLECTION_BUNDLE_KEY);
-        }else if(getArguments()!=null){
+        if(savedInstanceState != null && savedInstanceState.containsKey(SELECTED_RECIPE_INDEX_KEY)){
+            mSelectedRecipeIndex = savedInstanceState.getParcelable(SELECTED_RECIPE_INDEX_KEY);
+        }
+        if(getArguments()!=null){
             recipeResponseModel = getArguments().getParcelable(RECIPE_COLLECTION_BUNDLE_KEY);
         }
         recipes = recipeResponseModel.getRecipes();
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(SELECTED_RECIPE_INDEX_KEY, mSelectedRecipeIndex);
+        super.onSaveInstanceState(outState);
+    }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        mSelectedRecipeIndex = position;
+        RecipeModel selectedRecipe = recipeResponseModel.getRecipes().get(position);
+        Intent destinationIntent = new Intent(getActivity(), RecipeIngredientStepsActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(SELECTED_RECIPE_BUNDLE_KEY, selectedRecipe);
+        destinationIntent.putExtra(RECIPE_BUNDLE, bundle);
+        getActivity().startActivity(destinationIntent);
     }
 }

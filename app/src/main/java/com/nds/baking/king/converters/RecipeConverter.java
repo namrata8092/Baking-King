@@ -1,14 +1,19 @@
 package com.nds.baking.king.converters;
 
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.nds.baking.king.models.RecipeIngredientModel;
 import com.nds.baking.king.models.RecipeModel;
 import com.nds.baking.king.models.RecipeResponseModel;
 import com.nds.baking.king.models.RecipeStepModel;
-import com.nds.baking.king.net.responses.RecipeResponse;
 import com.nds.baking.king.net.tos.Ingredient;
 import com.nds.baking.king.net.tos.Recipe;
 import com.nds.baking.king.net.tos.Step;
-import com.nds.baking.king.utils.JsonSerializationHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,20 +23,26 @@ import java.util.List;
  */
 
 public class RecipeConverter {
-
+private static final String TAG = "Test"+RecipeConverter.class.getSimpleName();
     public static RecipeResponseModel convert(String jsonResponse) {
-        RecipeResponse response = JsonSerializationHelper.deserializeObject(RecipeResponse.class, jsonResponse);
-        RecipeResponseModel responseModel = new RecipeResponseModel(toRecipeListModel(response.getRecipeList()));
+        Log.d(TAG, "received valid response ");
+        JsonParser jsonParser = new JsonParser();
+        JsonElement jsonElement = jsonParser.parse(jsonResponse);
+        JsonArray recipeList = jsonElement.getAsJsonArray();
+        RecipeResponseModel responseModel = new RecipeResponseModel(toRecipeListModel(recipeList));
         return responseModel;
     }
 
-    private static List<RecipeModel> toRecipeListModel(List<Recipe> recipeList) {
+    private static List<RecipeModel> toRecipeListModel(JsonArray recipeList) {
         if(recipeList == null){
             return null;
         }
         List<RecipeModel> recipeModel = new ArrayList<>();
-        for(int index = 0; index < recipeList.size(); index++){
-            Recipe recipe = recipeList.get(index);
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        for(int i =0; i < recipeList.size(); i++){
+            Log.d(TAG, "iterate response ");
+            Recipe recipe = gson.fromJson(recipeList.get(i), Recipe.class);
             RecipeModel model = new RecipeModel(Integer.toString(recipe.getID()),
                     recipe.getRecipeName(), toRecipeStepsListModel(recipe.getSteps()),
                     toRecipeIngredientListModel(recipe.getIngredients()));
@@ -59,7 +70,7 @@ public class RecipeConverter {
         if(steps == null)
             return null;
         List<RecipeStepModel> stepsModel = new ArrayList<>();
-        for(int index = 0; index < stepsModel.size(); index++){
+        for(int index = 0; index < steps.size(); index++){
             Step step = steps.get(index);
             RecipeStepModel model = new RecipeStepModel(Integer.toString(step.getStepID()),
                     step.getShortDescription(), step.getDescription());
