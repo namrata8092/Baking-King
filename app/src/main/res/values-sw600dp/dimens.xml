@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="recipe_title">14sp</dimen>
-    <dimen name="recipe_title_margin">5dp</dimen>
-    <dimen name="progressbar_size">48dp</dimen>
+    <dimen name="recipe_title">16sp</dimen>
+    <dimen name="recipe_title_margin">8dp</dimen>
+    <dimen name="progressbar_size">56dp</dimen>
 </resources>
