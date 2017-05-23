@@ -3,23 +3,13 @@
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <fragment
-        android:id="@+id/recipe_video"
-        android:name="com.nds.baking.king.views.Fragments.RecipeVideoFragment"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/detailSlidePager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:tag="@string/recipe_video_fragment_tag"
-        android:layout_alignParentTop="true"/>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/navigationFooter" />
 
-    <fragment
-        android:id="@+id/recipe_steps_detail"
-        android:name="com.nds.baking.king.views.Fragments.RecipeStepsDetailFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/recipe_video"
-        android:tag="@string/steps_detail_fragment_tag" />
-
-    <RelativeLayout
+    <RelativeLayout android:id="@+id/navigationFooter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
@@ -28,12 +18,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            tool:src="@mipmap/ic_launcher_round"/>
+            android:src="@drawable/previous_disable"/>
         <ImageButton android:id="@+id/nextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            tool:src="@mipmap/ic_launcher_round"/>
+            android:src="@drawable/next"/>
     </RelativeLayout>
 </RelativeLayout>

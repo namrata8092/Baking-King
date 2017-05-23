@@ -13,5 +13,5 @@
     <ImageView
         android:id="@+id/recipeIcon"
         style="@style/Recipe_Icon"
-        android:src="@mipmap/ic_launcher_round"/>
+        android:src="@drawable/ic_launcher_round"/>
 </LinearLayout>
