@@ -1,7 +1,6 @@
 package com.nds.baking.king.views.adapter;
 
 import android.content.Context;
-import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,13 +38,6 @@ public class RecipeStepsDescriptionAdapter extends RecyclerView.Adapter<RecipeSt
 
     @Override
     public void onBindViewHolder(RecipeStepsViewHolder holder, int position) {
-        if(position == 0){
-            if(Build.VERSION.SDK_INT <Build.VERSION_CODES.M){
-                holder.recipeStep.setTextAppearance(mContext,R.style.ingredient_title);
-            }else{
-                holder.recipeStep.setTextAppearance(R.style.ingredient_title);
-            }
-        }
         holder.recipeStep.setText(mRecipeStepModelList.get(position).getShortDescription());
     }
 

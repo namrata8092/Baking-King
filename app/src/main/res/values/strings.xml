@@ -11,5 +11,7 @@
     <string name="server_error_msg" formatted="false" translatable="true">Temporary system is unavailable, try after sometime.</string>
     <string name="ok" formatted="false" translatable="true">OK</string>
     <string name="recipe_request_tag" formatted="false" translatable="false">recipe_request</string>
-    <string name="ingredient_title">Ingredients</string>
+    <string name="ingredient_title">Recipe Ingredients</string>
+    <string name="recipe_steps">Recipe Steps</string>
+    <string name="no_recipe_widget_msg">No Recipe available</string>
 </resources>

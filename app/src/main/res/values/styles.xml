@@ -37,7 +37,7 @@
     <style name="ingredient_text">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/ingredient_text</item>
+        <item name="android:textSize">@dimen/font_very_small</item>
         <item name="android:layout_margin">@dimen/recipe_title_margin</item>
         <item name="android:textColor">@color/darkGrey</item>
         <item name="android:gravity">left</item>
@@ -46,10 +46,19 @@
     <style name="recipe_step">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/ingredient_text</item>
+        <item name="android:textSize">@dimen/font_very_small</item>
         <item name="android:layout_margin">@dimen/recipe_title_margin</item>
         <item name="android:textColor">@color/darkGrey</item>
         <item name="android:gravity">left</item>
     </style>
 
+    <style name="recipe_step_description">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">3</item>
+        <item name="android:textSize">@dimen/font_medium</item>
+        <item name="android:layout_margin">@dimen/recipe_description_margin</item>
+        <item name="android:textColor">@color/darkGrey</item>
+        <item name="android:gravity">left</item>
+    </style>
 </resources>

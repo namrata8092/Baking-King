@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <GridView
+        android:id="@+id/recipe_grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:numColumns="4" />
+    <RelativeLayout
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            style="@style/Recipe_title"
+            android:layout_centerInParent="true"
+            android:text="@string/no_recipe_widget_msg" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.2"
+            android:src="@drawable/ic_launcher" />
+    </RelativeLayout>
+</FrameLayout>

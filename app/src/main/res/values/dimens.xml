@@ -2,7 +2,11 @@
 <resources>
     <dimen name="recipe_title">14sp</dimen>
     <dimen name="recipe_title_margin">5dp</dimen>
+    <dimen name="recipe_description_margin">10dp</dimen>
     <dimen name="progressbar_size">48dp</dimen>
-    <dimen name="ingredient_text">12sp</dimen>
+    <dimen name="font_very_small">12sp</dimen>
+    <dimen name="font_small">14sp</dimen>
+    <dimen name="font_medium">16sp</dimen>
     <dimen name="layout_left_right_margin">10dp</dimen>
+    <dimen name="widget_margin">8dp</dimen>
 </resources>

@@ -44,6 +44,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements View.OnCl
             mSelectedStep = bundle.getInt(SELECTED_STEP_INDEX_KEY);
             mTotalSteps = mRecipeStepModelList.size();
         }
+        mRecipeDetailViewPager = (ViewPager)findViewById(R.id.detailSlidePager);
 
         mPreviousButton = (ImageButton)findViewById(R.id.previousButton);
         mPreviousButton.setOnClickListener(this);
@@ -51,14 +52,26 @@ public class RecipeDetailActivity extends AppCompatActivity implements View.OnCl
         mNextButton = (ImageButton)findViewById(R.id.nextButton);
         mNextButton.setOnClickListener(this);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        detailpageAdapter = new RecipeDetailPagerAdapter(fragmentManager, mRecipeStepModelList);
-
-        mRecipeDetailViewPager = (ViewPager)findViewById(R.id.detailSlidePager);
-        mRecipeDetailViewPager.setAdapter(detailpageAdapter);
-        mRecipeDetailViewPager.addOnPageChangeListener(this);
+        loadRecipeStepsSlides();
 
         setRecipeIndicator();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(detailpageAdapter!=null){
+            loadRecipeStepsSlides();
+            detailpageAdapter.notifyDataSetChanged();
+            mRecipeDetailViewPager.setCurrentItem(mSelectedStep);
+        }
+    }
+
+    private void loadRecipeStepsSlides() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        detailpageAdapter = new RecipeDetailPagerAdapter(fragmentManager, mRecipeStepModelList);
+        mRecipeDetailViewPager.setAdapter(detailpageAdapter);
+        mRecipeDetailViewPager.addOnPageChangeListener(this);
     }
 
     private void setRecipeIndicator() {
@@ -90,12 +103,14 @@ public class RecipeDetailActivity extends AppCompatActivity implements View.OnCl
                 if(mSelectedStep > 0){
                     mSelectedStep--;
                     setRecipeIndicator();
+                    mRecipeDetailViewPager.setCurrentItem(mSelectedStep);
                 }
                 break;
             case R.id.nextButton :
                 if(mSelectedStep < mTotalSteps-1){
                     mSelectedStep++;
                     setRecipeIndicator();
+                    mRecipeDetailViewPager.setCurrentItem(mSelectedStep);
                 }
                 break;
                 default:
