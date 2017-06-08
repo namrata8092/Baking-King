@@ -1,7 +1,5 @@
 package com.nds.baking.king.converters;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -14,7 +12,7 @@ import com.nds.baking.king.models.RecipeStepModel;
 import com.nds.baking.king.net.tos.Ingredient;
 import com.nds.baking.king.net.tos.Recipe;
 import com.nds.baking.king.net.tos.Step;
-
+import com.orhanobut.logger.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,10 +21,13 @@ import java.util.List;
  */
 
 public class RecipeConverter {
-private static final String TAG = "Test"+RecipeConverter.class.getSimpleName();
+private static final String TAG = RecipeConverter.class.getSimpleName();
     public static RecipeResponseModel convert(String jsonResponse) {
-        Log.d(TAG, "received valid response ");
+        Logger.d("received valid response ");
         JsonParser jsonParser = new JsonParser();
+        if(jsonResponse == null)
+            return null;
+        Logger.d("response is "+jsonResponse);
         JsonElement jsonElement = jsonParser.parse(jsonResponse);
         JsonArray recipeList = jsonElement.getAsJsonArray();
         RecipeResponseModel responseModel = new RecipeResponseModel(toRecipeListModel(recipeList));
@@ -41,7 +42,7 @@ private static final String TAG = "Test"+RecipeConverter.class.getSimpleName();
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         for(int i =0; i < recipeList.size(); i++){
-            Log.d(TAG, "iterate response ");
+            Logger.d("iterate response ");
             Recipe recipe = gson.fromJson(recipeList.get(i), Recipe.class);
             RecipeModel model = new RecipeModel(Integer.toString(recipe.getID()),
                     recipe.getRecipeName(), toRecipeStepsListModel(recipe.getSteps()),

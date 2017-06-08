@@ -2,7 +2,6 @@ package com.nds.baking.king.net.requests;
 
 import android.content.Context;
 import android.net.Uri;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -13,6 +12,7 @@ import com.android.volley.toolbox.Volley;
 import com.nds.baking.king.converters.RecipeConverter;
 import com.nds.baking.king.models.RecipeResponseModel;
 import com.nds.baking.king.utils.ValidationUtil;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONObject;
 
@@ -24,7 +24,7 @@ import java.lang.ref.WeakReference;
 
 public class NetworkRequestManager {
 
-    private static final String TAG = "Test"+NetworkRequestManager.class.getSimpleName();
+    private static final String TAG = NetworkRequestManager.class.getSimpleName();
     public static final String REQUEST_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
     private static NetworkRequestManager mInstance;
     private RequestQueue mRequestQueue;
@@ -78,7 +78,7 @@ public class NetworkRequestManager {
                 }
                 RecipeResponseModel responseModel = null;
                 if (ValidationUtil.isValidString(response)) {
-                    Log.d(TAG, "received valid response ");
+                    Logger.d( "received valid response ");
                     responseModel = RecipeConverter.convert(response);
                 }
                 if (requester != null && responseModel != null) {

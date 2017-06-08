@@ -3,22 +3,27 @@ package com.nds.baking.king.views.Activities;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.nds.baking.king.BakingApplication;
+import com.nds.baking.king.BuildConfig;
 import com.nds.baking.king.R;
+import com.nds.baking.king.converters.RecipeConverter;
 import com.nds.baking.king.models.RecipeResponseModel;
 import com.nds.baking.king.net.requests.NetworkRequestManager;
 import com.nds.baking.king.net.requests.NetworkRequester;
+import com.nds.baking.king.utils.JsonSerializationHelper;
 import com.nds.baking.king.utils.NetworkUtil;
 import com.nds.baking.king.views.Fragments.ErrorMessageFragment;
 import com.nds.baking.king.views.Fragments.RecipeCollectionFragment;
+import com.orhanobut.logger.Logger;
 
 import java.lang.ref.WeakReference;
 
 public class BakingLauncherActivity extends AppCompatActivity {
+
+    private static final String TAG = BakingLauncherActivity.class.getSimpleName();
     private ProgressBar mProgressBar;
     private BakingApplication mBakingApplication;
     private NetworkRequestManager mNetworkRequestManager;
@@ -58,8 +63,17 @@ public class BakingLauncherActivity extends AppCompatActivity {
         } else {
             showProgressBar();
             if (!isFinishing()) {
-                mNetworkRequestManager.getRecipeList(new WeakReference<NetworkRequester>(bakingNetworkRequster), NetworkRequestManager.REQUEST_URL,
-                        getResources().getString(R.string.recipe_request_tag));
+                if(BuildConfig.DEBUG){
+                    int resourceID = getApplicationContext().getResources().getIdentifier(
+                            "sample_repsonse", "raw", getPackageName());
+                    String responseFromAssets = JsonSerializationHelper.readFakeResponseFromRaw( getApplicationContext(),resourceID);
+                        RecipeResponseModel responseModel = RecipeConverter.convert(responseFromAssets);
+                        showRecipeCollectionFragment(responseModel, mFragmentManager);
+                }else{
+                    mNetworkRequestManager.getRecipeList(new WeakReference<NetworkRequester>(bakingNetworkRequster), NetworkRequestManager.REQUEST_URL,
+                            getResources().getString(R.string.recipe_request_tag));
+                }
+
             }
         }
 
@@ -68,7 +82,7 @@ public class BakingLauncherActivity extends AppCompatActivity {
     private NetworkRequester bakingNetworkRequster = new NetworkRequester() {
         @Override
         public void onFailure(Throwable error) {
-            Log.d("Test", "error " + error);
+            Logger.e(TAG, "error " + error);
             hideProgressBar();
             ErrorMessageFragment errorMessageFragment =
                     ErrorMessageFragment.newInstance(getResources().getString(R.string.server_error_msg));
@@ -78,10 +92,14 @@ public class BakingLauncherActivity extends AppCompatActivity {
         @Override
         public void onSuccess(Object respObj) {
             RecipeResponseModel responseModel = (RecipeResponseModel) respObj;
-            RecipeCollectionFragment recipeCollectionFragment = RecipeCollectionFragment.newInstance(responseModel);
-            mFragmentManager.beginTransaction().replace(R.id.main_container, recipeCollectionFragment).commit();
+            showRecipeCollectionFragment(responseModel, mFragmentManager);
         }
     };
+
+    private void showRecipeCollectionFragment(RecipeResponseModel responseModel, FragmentManager mFragmentManager) {
+        RecipeCollectionFragment recipeCollectionFragment = RecipeCollectionFragment.newInstance(responseModel);
+        mFragmentManager.beginTransaction().replace(R.id.main_container, recipeCollectionFragment).commit();
+    }
 
     private void showProgressBar() {
         mProgressBar.setVisibility(View.VISIBLE);
