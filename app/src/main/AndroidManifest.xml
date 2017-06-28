@@ -3,7 +3,7 @@
     package="com.nds.baking.king">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name="com.nds.baking.king.BakingApplication"
@@ -22,19 +22,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.nds.baking.king.views.Activities.RecipeIngredientStepsActivity" />
-        <activity android:name="com.nds.baking.king.views.Activities.RecipeDetailActivity" />
+
+        <activity
+            android:name="com.nds.baking.king.views.Activities.RecipeIngredientStepsActivity"/>
+
+        <activity
+            android:name="com.nds.baking.king.views.Activities.RecipeDetailActivity" />
+
         <receiver android:name=".providers.BakingWidgetProvider">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/baking_widget_provider" />
         </receiver>
-        <service android:name=".services.BakingRemoteViewService"
+
+        <service
+            android:name=".services.BakingRemoteViewService"
             android:permission="android.permission.BIND_REMOTEVIEWS"></service>
-        <service android:name=".services.BakingWidgetService"/>
+        <service android:name=".services.BakingWidgetService" />
     </application>
 
 </manifest>

@@ -13,9 +13,8 @@
             style="@style/ingredient_title"
             android:text="@string/ingredient_title" />
 
-        <fragment
+        <FrameLayout
             android:id="@+id/recipe_ingredients"
-            android:name="com.nds.baking.king.views.Fragments.RecipeIngredientsFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:tag="@string/ingredients_fragment_tag" />
@@ -30,9 +29,8 @@
             style="@style/ingredient_title"
             android:text="@string/recipe_steps" />
 
-        <fragment
+        <FrameLayout
             android:id="@+id/recipe_steps_description"
-            android:name="com.nds.baking.king.views.Fragments.RecipeStepsDescriptionFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:tag="@string/steps_description_fragment_tag" />

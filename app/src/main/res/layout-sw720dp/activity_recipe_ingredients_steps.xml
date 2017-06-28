@@ -6,50 +6,45 @@
     android:id="@+id/twoPanelMaster"
     android:weightSum="10">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="7">
-
-        <fragment
-            android:id="@+id/recipe_video"
-            android:name="com.nds.baking.king.views.Fragments.RecipeVideoFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:tag="@string/recipe_video_fragment_tag" />
-
-        <fragment
-            android:id="@+id/recipe_steps_detail"
-            android:name="com.nds.baking.king.views.Fragments.RecipeStepsDetailFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/recipe_video"
-            android:tag="@string/steps_detail_fragment_tag" />
-
-    </RelativeLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="3"
         android:orientation="vertical">
 
-        <fragment
+        <FrameLayout
             android:id="@+id/recipe_ingredients"
-            android:name="com.nds.baking.king.views.Fragments.RecipeIngredientsFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:tag="@string/ingredients_fragment_tag" />
 
-        <fragment
+        <FrameLayout
             android:id="@+id/recipe_steps_description"
-            android:name="com.nds.baking.king.views.Fragments.RecipeStepsDescriptionFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:tag="@string/steps_description_fragment_tag" />
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="7">
+
+        <FrameLayout
+            android:id="@+id/recipe_video"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:tag="@string/recipe_video_fragment_tag" />
+
+        <FrameLayout
+            android:id="@+id/recipe_steps_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/recipe_video"
+            android:tag="@string/steps_detail_fragment_tag" />
+
+    </RelativeLayout>
 
 </LinearLayout>

@@ -3,6 +3,7 @@ package com.nds.baking.king.views.Activities;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -14,6 +15,7 @@ import com.nds.baking.king.R;
 import com.nds.baking.king.models.RecipeStepModel;
 import com.nds.baking.king.views.adapter.RecipeDetailPagerAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,25 +27,33 @@ public class RecipeDetailActivity extends AppCompatActivity implements View.OnCl
     private static final String BUNDLE_STEPS ="stepsDescription";
     private static final String SELECTED_STEP_INDEX_KEY="selectedStepModel";
     private static final String STEPS_BUNDLE_KEY="selectedStepSBundle";
+    private static final String RECIPE_NAME ="recipeName";
     private List<RecipeStepModel> mRecipeStepModelList;
     private int mSelectedStep = 0;
     private int mTotalSteps = 0;
     private RecipeDetailPagerAdapter detailpageAdapter;
     private ImageButton mPreviousButton;
     private ImageButton mNextButton;
+    private String mTitle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_details);
-        if(savedInstanceState!=null){
-            return;
+        if(savedInstanceState!=null && savedInstanceState.containsKey(BUNDLE_STEPS)){
+            mRecipeStepModelList = savedInstanceState.getParcelableArrayList(BUNDLE_STEPS);
+            mSelectedStep = savedInstanceState.getInt(SELECTED_STEP_INDEX_KEY);
+            mTitle = savedInstanceState.getString(RECIPE_NAME);
         }else if(getIntent().getBundleExtra(STEPS_BUNDLE_KEY)!=null){
             Bundle bundle = getIntent().getBundleExtra(STEPS_BUNDLE_KEY);
             mRecipeStepModelList = bundle.getParcelableArrayList(BUNDLE_STEPS);
             mSelectedStep = bundle.getInt(SELECTED_STEP_INDEX_KEY);
-            mTotalSteps = mRecipeStepModelList.size();
+            mTitle = bundle.getString(RECIPE_NAME);
         }
+
+        setTitle(mTitle);
+
+        mTotalSteps = mRecipeStepModelList.size();
         mRecipeDetailViewPager = (ViewPager)findViewById(R.id.detailSlidePager);
 
         mPreviousButton = (ImageButton)findViewById(R.id.previousButton);
@@ -55,6 +65,14 @@ public class RecipeDetailActivity extends AppCompatActivity implements View.OnCl
         loadRecipeStepsSlides();
 
         setRecipeIndicator();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList(BUNDLE_STEPS, (ArrayList<? extends Parcelable>) mRecipeStepModelList);
+        outState.putInt(SELECTED_STEP_INDEX_KEY,mSelectedStep);
+        outState.putString(RECIPE_NAME, mTitle);
+        super.onSaveInstanceState(outState);
     }
 
     @Override

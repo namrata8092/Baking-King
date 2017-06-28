@@ -54,8 +54,7 @@
 
     <style name="recipe_step_description">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">0dp</item>
-        <item name="android:layout_weight">3</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/font_medium</item>
         <item name="android:layout_margin">@dimen/recipe_description_margin</item>
         <item name="android:textColor">@color/darkGrey</item>

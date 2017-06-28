@@ -24,12 +24,13 @@ import java.lang.ref.WeakReference;
 public class BakingLauncherActivity extends AppCompatActivity {
 
     private static final String TAG = BakingLauncherActivity.class.getSimpleName();
+    private static final String RECIPE_COLLECTION_BUNDLE_KEY = "recipes";
     private ProgressBar mProgressBar;
     private BakingApplication mBakingApplication;
     private NetworkRequestManager mNetworkRequestManager;
     private BakingLauncherActivity mBakingLauncherActivity;
     private FragmentManager mFragmentManager;
-
+    private RecipeResponseModel mRecipeResponseModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +45,19 @@ public class BakingLauncherActivity extends AppCompatActivity {
 
         mFragmentManager = getSupportFragmentManager();
 
-        if (savedInstanceState != null) {
-            return;
+        if (savedInstanceState != null && savedInstanceState.containsKey(RECIPE_COLLECTION_BUNDLE_KEY)) {
+            mRecipeResponseModel = savedInstanceState.getParcelable(RECIPE_COLLECTION_BUNDLE_KEY);
+            showRecipeCollectionFragment(mRecipeResponseModel, mFragmentManager);
         } else {
             loadAppropriateFragment(mNetworkRequestManager);
         }
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable(RECIPE_COLLECTION_BUNDLE_KEY, mRecipeResponseModel);
+        super.onSaveInstanceState(outState);
     }
 
     private void loadAppropriateFragment(NetworkRequestManager mNetworkRequestManager) {
@@ -67,8 +75,8 @@ public class BakingLauncherActivity extends AppCompatActivity {
                     int resourceID = getApplicationContext().getResources().getIdentifier(
                             "sample_repsonse", "raw", getPackageName());
                     String responseFromAssets = JsonSerializationHelper.readFakeResponseFromRaw( getApplicationContext(),resourceID);
-                        RecipeResponseModel responseModel = RecipeConverter.convert(responseFromAssets);
-                        showRecipeCollectionFragment(responseModel, mFragmentManager);
+                    mRecipeResponseModel = RecipeConverter.convert(responseFromAssets);
+                    showRecipeCollectionFragment(mRecipeResponseModel, mFragmentManager);
                 }else{
                     mNetworkRequestManager.getRecipeList(new WeakReference<NetworkRequester>(bakingNetworkRequster), NetworkRequestManager.REQUEST_URL,
                             getResources().getString(R.string.recipe_request_tag));

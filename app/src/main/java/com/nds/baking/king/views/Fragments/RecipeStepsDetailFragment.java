@@ -38,8 +38,16 @@ public class RecipeStepsDetailFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if(savedInstanceState!=null && savedInstanceState.containsKey(KEY_STEP_DETAIL))
+            mStepDetail = savedInstanceState.getString(KEY_STEP_DETAIL);
+        else if (getArguments() != null) {
             mStepDetail = getArguments().getString(KEY_STEP_DETAIL);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString(KEY_STEP_DETAIL, mStepDetail);
+        super.onSaveInstanceState(outState);
     }
 }

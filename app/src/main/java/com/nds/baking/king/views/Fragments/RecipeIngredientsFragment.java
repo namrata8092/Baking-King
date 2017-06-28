@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.nds.baking.king.R;
 import com.nds.baking.king.models.RecipeIngredientModel;
+import com.nds.baking.king.models.RecipeModel;
 import com.nds.baking.king.views.adapter.RecipeIngredientAdapter;
 
 import java.util.ArrayList;
@@ -25,14 +26,13 @@ public class RecipeIngredientsFragment extends Fragment {
     private List<RecipeIngredientModel> mRecipeIngredientModelList;
     private RecipeIngredientAdapter ingredientAdapter;
 
-    public static RecipeIngredientsFragment newInstance(List<RecipeIngredientModel> recipeIngredientModelList) {
+    public static RecipeIngredientsFragment newInstance(RecipeModel mSelectedRecipe) {
         RecipeIngredientsFragment fragment = new RecipeIngredientsFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(BUNDLE_RECIPE_INGREDIENT, (ArrayList<? extends Parcelable>) recipeIngredientModelList);
+        bundle.putParcelableArrayList(BUNDLE_RECIPE_INGREDIENT, (ArrayList<? extends Parcelable>) mSelectedRecipe.getRecipeIngredientModelList());
         fragment.setArguments(bundle);
         return fragment;
     }
-
 
     @Nullable
     @Override

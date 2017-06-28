@@ -61,7 +61,7 @@ public class RecipeCollectionFragment extends Fragment implements AdapterView.On
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(savedInstanceState != null && savedInstanceState.containsKey(SELECTED_RECIPE_INDEX_KEY)){
-            mSelectedRecipeIndex = savedInstanceState.getParcelable(SELECTED_RECIPE_INDEX_KEY);
+            mSelectedRecipeIndex = savedInstanceState.getInt(SELECTED_RECIPE_INDEX_KEY);
         }
         if(getArguments()!=null){
             recipeResponseModel = getArguments().getParcelable(RECIPE_COLLECTION_BUNDLE_KEY);
