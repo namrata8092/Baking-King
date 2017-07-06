@@ -22,7 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".views.Activities.TestActivity"/>
         <activity
             android:name="com.nds.baking.king.views.Activities.RecipeIngredientStepsActivity"/>
 

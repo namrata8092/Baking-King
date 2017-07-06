@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.nds.baking.king.BakingApplication;
 import com.nds.baking.king.BuildConfig;
@@ -25,7 +26,7 @@ import java.lang.ref.WeakReference;
  */
 
 public class BakingWidgetService extends IntentService {
-    private static final String TAG = BakingWidgetService.class.getSimpleName();
+    private static final String TAG = "TEST"+BakingWidgetService.class.getSimpleName();
     private Context mContext;
     private static final String ACTION_UPDATE_WIDGET = "com.nds.baking.king.UPDATE_BAKING_RECIPE";
 
@@ -63,12 +64,12 @@ public class BakingWidgetService extends IntentService {
                         mNetworkRequestManager.getRecipeList(new WeakReference<NetworkRequester>(new NetworkRequester() {
                                     @Override
                                     public void onFailure(Throwable error) {
-                                        Logger.d( "onFailure ++");
+                                        Logger.d( TAG,"onFailure ++");
                                     }
 
                                     @Override
                                     public void onSuccess(Object respObj) {
-                                        Logger.d( "onSuccess ++");
+                                        Logger.d( TAG,"onSuccess ++");
                                         RecipeResponseModel responseModel = (RecipeResponseModel) respObj;
                                         showWidgetData(responseModel, mContext);
                                     }
@@ -91,7 +92,7 @@ public class BakingWidgetService extends IntentService {
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(mContext, BakingWidgetProvider.class));
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.recipe_grid_view);
         for (int widgetId : appWidgetIds) {
-            Logger.d( " id " + widgetId);
+            Logger.d( TAG," id " + widgetId);
             BakingWidgetProvider.updateWidget(mContext, appWidgetManager, widgetId, responseModel);
         }
     }

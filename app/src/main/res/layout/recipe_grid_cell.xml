@@ -12,6 +12,5 @@
         tool:text="Title"/>
     <ImageView
         android:id="@+id/recipeIcon"
-        style="@style/Recipe_Icon"
-        android:src="@drawable/ic_launcher_round"/>
+        style="@style/Recipe_Icon"/>
 </LinearLayout>

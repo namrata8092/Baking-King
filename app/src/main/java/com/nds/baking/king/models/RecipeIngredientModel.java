@@ -6,7 +6,8 @@ import android.os.Parcelable;
 /**
  * Created by Namrata Shah on 5/9/2017.
  */
-
+/*This is model class for recipe ingredients
+* */
 public class RecipeIngredientModel implements Parcelable{
 
     private final String ingredientQuantity;

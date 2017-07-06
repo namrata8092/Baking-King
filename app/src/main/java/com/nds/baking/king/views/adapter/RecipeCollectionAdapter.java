@@ -44,6 +44,10 @@ public class RecipeCollectionAdapter extends RecyclerView.Adapter<RecipeCollecti
         holder.mRecipeTitleTextView.setText(recipeModel.getRecipeName());
         if(recipeModel.isImgURL())
             Glide.with(mContext).load(recipeModel.getRecipeImgURL()).error(R.drawable.ic_launcher).into(holder.mRecipeIcon);
+        else if(position%2 != 0)
+            holder.mRecipeIcon.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.cake));
+        else
+            holder.mRecipeIcon.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.donut));
     }
 
     @Override

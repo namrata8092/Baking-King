@@ -10,6 +10,9 @@ import com.orhanobut.logger.Logger;
  * Created by Namrata Shah on 5/9/2017.
  */
 
+/*BakingApplication is application class, which is used to instantiane network requestor.
+This also turns on log during debug mode.
+* */
 public class BakingApplication extends Application {
 
     private NetworkRequestManager networkRequestManager;

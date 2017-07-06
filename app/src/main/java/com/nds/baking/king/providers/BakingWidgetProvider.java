@@ -31,22 +31,24 @@ public class BakingWidgetProvider extends AppWidgetProvider {
     private static RecipeResponseModel recipeResponseModel;
     private static final String SELECTED_RECIPE_BUNDLE_KEY = "selectedRecipe";
     private static final String RECIPE_BUNDLE="recipeBundle";
+    private static final int WIDGET_MIN_WIDTH = 300;
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
-        Logger.d("onUpdate called");
+        Logger.d(TAG,"onUpdate called");
         startBakingWidgetService(context);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    public static void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetIds, RecipeResponseModel responseModel) {
+    public static void updateWidget(Context context, AppWidgetManager appWidgetManager,
+                                    int appWidgetIds, RecipeResponseModel responseModel) {
         recipeResponseModel = responseModel;
         RemoteViews views;
         Bundle widgetDetails = appWidgetManager.getAppWidgetOptions(appWidgetIds);
         int widgetWidth = widgetDetails.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
-        Logger.d("width is "+widgetWidth+" appWidgetIds "+appWidgetIds);
-        if(widgetWidth < 300){
+        Logger.d(TAG,"width is "+widgetWidth+" appWidgetIds "+appWidgetIds);
+        if(widgetWidth < WIDGET_MIN_WIDTH){
             views = getSingleRecipeView(context, 0, recipeResponseModel);
         }else{
             views = getRecipeGridView(context, appWidgetIds, recipeResponseModel);
@@ -54,11 +56,10 @@ public class BakingWidgetProvider extends AppWidgetProvider {
         appWidgetManager.updateAppWidget(appWidgetIds, views);
     }
 
-    private static RemoteViews getRecipeGridView(Context context, int appWidgetIds, RecipeResponseModel recipeResponseModel) {
-        Logger.d("getRecipeGridView");
+    private static RemoteViews getRecipeGridView(Context context, int appWidgetIds,
+                                                 RecipeResponseModel recipeResponseModel) {
+        Logger.d(TAG,"getRecipeGridView");
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_grid_layout);
-
-
         Intent intent = new Intent(context, BakingRemoteViewService.class);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds);
         intent.putExtra(RECIPE_BUNDLE, (new Gson().toJson(recipeResponseModel)).toString());
@@ -73,8 +74,9 @@ public class BakingWidgetProvider extends AppWidgetProvider {
         return views;
     }
 
-    private static RemoteViews getSingleRecipeView(Context context, int recipeID, RecipeResponseModel responseModel) {
-        Logger.d("getSingleRecipeView");
+    private static RemoteViews getSingleRecipeView(Context context, int recipeID,
+                                                   RecipeResponseModel responseModel) {
+        Logger.d(TAG,"getSingleRecipeView");
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_initial_layout);
         Intent intent=null;
         if(recipeID < 0){
@@ -93,39 +95,10 @@ public class BakingWidgetProvider extends AppWidgetProvider {
     }
 
     @Override
-    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
+    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager,
+                                          int appWidgetId, Bundle newOptions) {
         startBakingWidgetService(context);
-        Logger.d("onAppWidgetOptionsChanged called");
+        Logger.d(TAG,"onAppWidgetOptionsChanged called");
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
-    }
-
-    @Override
-    public void onDeleted(Context context, int[] appWidgetIds) {
-        super.onDeleted(context, appWidgetIds);
-        Logger.d("onDeleted called");
-    }
-
-    @Override
-    public void onEnabled(Context context) {
-        super.onEnabled(context);
-        Logger.d("onEnabled called");
-    }
-
-    @Override
-    public void onDisabled(Context context) {
-        super.onDisabled(context);
-        Logger.d("onDisabled called");
-    }
-
-    @Override
-    public void onRestored(Context context, int[] oldWidgetIds, int[] newWidgetIds) {
-        super.onRestored(context, oldWidgetIds, newWidgetIds);
-        Logger.d("onRestored called");
-    }
-
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        super.onReceive(context, intent);
-        Logger.d("onReceive called");
     }
 }

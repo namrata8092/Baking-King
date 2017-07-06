@@ -11,15 +11,16 @@ import com.nds.baking.king.Constants;
 import com.nds.baking.king.R;
 import com.nds.baking.king.models.RecipeModel;
 import com.nds.baking.king.views.Fragments.RecipeIngredientsFragment;
+import com.nds.baking.king.views.Fragments.RecipeStepSlideFragment;
 import com.nds.baking.king.views.Fragments.RecipeStepsDescriptionFragment;
-import com.nds.baking.king.views.Fragments.RecipeStepsDetailFragment;
-import com.nds.baking.king.views.Fragments.RecipeVideoFragment;
+import com.orhanobut.logger.Logger;
 
 /**
  * Created by Namrata Shah on 5/8/2017.
  */
 
 public class RecipeIngredientStepsActivity extends AppCompatActivity {
+    private static final String TAG = "Test"+RecipeIngredientStepsActivity.class.getSimpleName();
     private static final String SELECTED_RECIPE_BUNDLE_KEY = "selectedRecipe";
     private static final String RECIPE_BUNDLE="recipeBundle";
     private RecipeModel mSelectedRecipe;
@@ -55,10 +56,9 @@ public class RecipeIngredientStepsActivity extends AppCompatActivity {
         RecipeStepsDescriptionFragment stepsDescriptionFragment = RecipeStepsDescriptionFragment.newInstance(mSelectedRecipe);
         mFragmentManager.beginTransaction().add(R.id.recipe_steps_description, stepsDescriptionFragment).commit();
         if(mTwoPanel){
-            RecipeVideoFragment recipeVideoFragment = RecipeVideoFragment.newInstance(mSelectedRecipe.getRecipeStepModelList().get(0).getVideoURL());
-            mFragmentManager.beginTransaction().add(R.id.recipe_video, recipeVideoFragment).commit();
-            RecipeStepsDetailFragment recipeStepSlideFragment = RecipeStepsDetailFragment.newInstance(mSelectedRecipe.getRecipeStepModelList().get(0).getDescription());
-            mFragmentManager.beginTransaction().add(R.id.recipe_steps_detail, recipeStepSlideFragment).commit();
+            Logger.d(TAG,"it is two panel so add video");
+            RecipeStepSlideFragment stepSlideFragment = RecipeStepSlideFragment.newInstance(mSelectedRecipe.getRecipeStepModelList().get(0));
+            mFragmentManager.beginTransaction().add(R.id.recipe_video, stepSlideFragment).commit();
         }
     }
 

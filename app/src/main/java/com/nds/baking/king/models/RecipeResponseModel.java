@@ -10,7 +10,8 @@ import java.util.List;
 /**
  * Created by Namrata Shah on 5/9/2017.
  */
-
+/*This is model class for recipe response
+* */
 public class RecipeResponseModel implements Parcelable{
 
     private final List<RecipeModel> recipes;

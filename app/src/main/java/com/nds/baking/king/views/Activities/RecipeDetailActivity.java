@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import com.nds.baking.king.R;
 import com.nds.baking.king.models.RecipeStepModel;
 import com.nds.baking.king.views.adapter.RecipeDetailPagerAdapter;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements View.OnCl
     private ImageButton mPreviousButton;
     private ImageButton mNextButton;
     private String mTitle;
+    private static final String TAG="TEST"+RecipeDetailActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,7 +63,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements View.OnCl
 
         mNextButton = (ImageButton)findViewById(R.id.nextButton);
         mNextButton.setOnClickListener(this);
-
+        Logger.d(TAG,"onCreate");
         loadRecipeStepsSlides();
 
         setRecipeIndicator();
@@ -78,6 +80,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onResume() {
         super.onResume();
+        Logger.d(TAG,"onResume");
         if(detailpageAdapter!=null){
             loadRecipeStepsSlides();
             detailpageAdapter.notifyDataSetChanged();
@@ -86,6 +89,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void loadRecipeStepsSlides() {
+        Logger.d(TAG,"loadRecipeStepsSlides");
         FragmentManager fragmentManager = getSupportFragmentManager();
         detailpageAdapter = new RecipeDetailPagerAdapter(fragmentManager, mRecipeStepModelList);
         mRecipeDetailViewPager.setAdapter(detailpageAdapter);
@@ -93,6 +97,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void setRecipeIndicator() {
+        Logger.d(TAG,"setRecipeIndicator");
         if(mSelectedStep == 0){
             setBackGround(mPreviousButton, getResources().getDrawable(R.drawable.previous_disable));
             setBackGround(mNextButton, getResources().getDrawable(R.drawable.next));
@@ -116,6 +121,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onClick(View v) {
+        Logger.d(TAG,"onClick "+mSelectedStep);
         switch (v.getId()){
             case R.id.previousButton :
                 if(mSelectedStep > 0){
@@ -142,6 +148,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onPageSelected(int position) {
+        Logger.d(TAG,"onPageSelected "+position);
         mSelectedStep = position;
         setRecipeIndicator();
     }

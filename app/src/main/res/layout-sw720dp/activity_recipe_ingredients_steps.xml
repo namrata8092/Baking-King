@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/twoPanelMaster"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:id="@+id/twoPanelMaster"
     android:weightSum="10">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="7"
         android:orientation="vertical">
 
         <FrameLayout
@@ -29,22 +29,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="7">
+        android:layout_weight="3">
 
         <FrameLayout
             android:id="@+id/recipe_video"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:tag="@string/recipe_video_fragment_tag" />
-
-        <FrameLayout
-            android:id="@+id/recipe_steps_detail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/recipe_video"
-            android:tag="@string/steps_detail_fragment_tag" />
+            android:layout_height="match_parent" />
 
     </RelativeLayout>
+
 
 </LinearLayout>

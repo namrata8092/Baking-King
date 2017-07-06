@@ -20,7 +20,7 @@ import java.util.List;
  */
 
 public class BakingWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
-    private static final String TAG = BakingWidgetRemoteViewsFactory.class.getSimpleName();
+    private static final String TAG = "TEST"+BakingWidgetRemoteViewsFactory.class.getSimpleName();
     private RecipeResponseModel responseModel;
     private List<RecipeModel> recipeModelList;
     private Context mContext;
@@ -28,10 +28,10 @@ public class BakingWidgetRemoteViewsFactory implements RemoteViewsService.Remote
     private static final String SELECTED_RECIPE_BUNDLE_KEY = "selectedRecipe";
 
     public BakingWidgetRemoteViewsFactory(Context applicationContext, Intent intent) {
-        Logger.d( "BakingWidgetRemoteViewsFactory constrctor");
+        Logger.d( TAG,"BakingWidgetRemoteViewsFactory constrctor");
         this.mContext = applicationContext;
         String recipes = intent.getStringExtra(RECIPE_BUNDLE);
-        Logger.d("received recipes "+recipes);
+        Logger.d(TAG,"received recipes "+recipes);
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         this.responseModel = gson.fromJson(recipes, RecipeResponseModel.class);
         this.recipeModelList = responseModel.getRecipes();
@@ -39,24 +39,24 @@ public class BakingWidgetRemoteViewsFactory implements RemoteViewsService.Remote
 
     @Override
     public void onCreate() {
-        Logger.d( "BakingWidgetRemoteViewsFactory onCreate");
+        Logger.d( TAG,"BakingWidgetRemoteViewsFactory onCreate");
 
     }
 
     @Override
     public void onDataSetChanged() {
-        Logger.d( "BakingWidgetRemoteViewsFactory onDataSetChanged");
+        Logger.d( TAG,"BakingWidgetRemoteViewsFactory onDataSetChanged");
     }
 
 
     @Override
     public void onDestroy() {
-        Logger.d( "BakingWidgetRemoteViewsFactory onDestroy");
+        Logger.d( TAG,"BakingWidgetRemoteViewsFactory onDestroy");
     }
 
     @Override
     public int getCount() {
-        Logger.d( "BakingWidgetRemoteViewsFactory getCount");
+        Logger.d( TAG,"BakingWidgetRemoteViewsFactory getCount");
         if(recipeModelList!=null)
             return recipeModelList.size();
         return 0;
@@ -64,10 +64,16 @@ public class BakingWidgetRemoteViewsFactory implements RemoteViewsService.Remote
 
     @Override
     public RemoteViews getViewAt(int position) {
-        Logger.d( "BakingWidgetRemoteViewsFactory getViewAt");
+        Logger.d( TAG,"BakingWidgetRemoteViewsFactory getViewAt");
         RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.recipe_widget_grid_cell);
         views.setTextViewText(R.id.recipeName, recipeModelList.get(position).getRecipeName());
-        views.setTextViewText(R.id.recipeServing, recipeModelList.get(position).getServings());
+        views.setTextViewText(R.id.recipeServing, "Serving : "+recipeModelList.get(position).getServings());
+
+        if(position%2 != 0)
+            views.setImageViewResource(R.id.recipeIcon, R.drawable.cake);
+        else
+            views.setImageViewResource(R.id.recipeIcon, R.drawable.donut);
+
         RecipeModel selectedRecipe = responseModel.getRecipes().get(position);
         Bundle bundle = new Bundle();
         bundle.putParcelable(SELECTED_RECIPE_BUNDLE_KEY, selectedRecipe);
@@ -79,26 +85,26 @@ public class BakingWidgetRemoteViewsFactory implements RemoteViewsService.Remote
 
     @Override
     public RemoteViews getLoadingView() {
-        Logger.d( "BakingWidgetRemoteViewsFactory getLoadingView");
+        Logger.d( TAG,"BakingWidgetRemoteViewsFactory getLoadingView");
         RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.widget_loading_layout);
         return views;
     }
 
     @Override
     public int getViewTypeCount() {
-        Logger.d( "BakingWidgetRemoteViewsFactory getViewTypeCount");
+        Logger.d(TAG,"BakingWidgetRemoteViewsFactory getViewTypeCount");
         return 1;
     }
 
     @Override
     public long getItemId(int position) {
-        Logger.d( "BakingWidgetRemoteViewsFactory getItemId");
+        Logger.d( TAG,"BakingWidgetRemoteViewsFactory getItemId");
         return position;
     }
 
     @Override
     public boolean hasStableIds() {
-        Logger.d( "BakingWidgetRemoteViewsFactory hasStableIds");
+        Logger.d( TAG,"BakingWidgetRemoteViewsFactory hasStableIds");
         return true;
     }
 }

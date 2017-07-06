@@ -11,10 +11,10 @@ import com.orhanobut.logger.Logger;
  */
 
 public class BakingRemoteViewService extends RemoteViewsService  {
-    private static final String TAG = BakingRemoteViewService.class.getSimpleName();
+    private static final String TAG = "TEST"+BakingRemoteViewService.class.getSimpleName();
     @Override
         public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        Logger.d("BakingRemoteViewService get remote view");
+        Logger.d(TAG,"BakingRemoteViewService get remote view");
         return new BakingWidgetRemoteViewsFactory(this.getApplicationContext(), intent);
     }
 }

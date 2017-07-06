@@ -7,7 +7,8 @@ import java.util.List;
 /**
  * Created by Namrata Shah on 5/8/2017.
  */
-
+/*transfer object for recipe
+* */
 public class Recipe {
     @SerializedName("id")
     private int ID;

@@ -21,7 +21,9 @@ import java.lang.ref.WeakReference;
 /**
  * Created by Namrata Shah on 5/9/2017.
  */
-
+/*NetworkRequestManager is responsible for fetching recipe data over internet.
+*
+* */
 public class NetworkRequestManager {
 
     private static final String TAG = NetworkRequestManager.class.getSimpleName();
@@ -78,7 +80,7 @@ public class NetworkRequestManager {
                 }
                 RecipeResponseModel responseModel = null;
                 if (ValidationUtil.isValidString(response)) {
-                    Logger.d( "received valid response ");
+                    Logger.d( TAG,"received valid response ");
                     responseModel = RecipeConverter.convert(response);
                 }
                 if (requester != null && responseModel != null) {

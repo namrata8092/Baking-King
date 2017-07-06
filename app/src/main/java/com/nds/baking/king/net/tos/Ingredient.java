@@ -4,7 +4,8 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by Namrata Shah on 5/8/2017.
  */
-
+/*transfer object for ingredient
+* */
 public class Ingredient {
 
     @SerializedName("quantity")

@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="4.5"
         android:orientation="vertical">
 
         <FrameLayout
@@ -25,28 +25,15 @@
             android:tag="@string/steps_description_fragment_tag" />
 
     </LinearLayout>
-    <view android:background="@color/colorAccent"
-        android:layout_width="2dp"
-        android:layout_height="match_parent"/>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="5">
+        android:layout_weight="2.5">
 
         <FrameLayout
             android:id="@+id/recipe_video"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:tag="@string/recipe_video_fragment_tag" />
-
-        <FrameLayout
-            android:id="@+id/recipe_steps_detail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/recipe_video"
-            android:tag="@string/steps_detail_fragment_tag" />
+            android:layout_height="match_parent"/>
 
     </RelativeLayout>
 

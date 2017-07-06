@@ -19,6 +19,7 @@ import com.nds.baking.king.models.RecipeStepModel;
 import com.nds.baking.king.utils.DataUtil;
 import com.nds.baking.king.views.Activities.RecipeDetailActivity;
 import com.nds.baking.king.views.adapter.RecipeStepsDescriptionAdapter;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ import java.util.List;
 
 public class RecipeStepsDescriptionFragment extends Fragment implements AdapterView.OnItemClickListener {
 
+    private static final String TAG = "TEST"+RecipeStepsDescriptionFragment.class.getSimpleName();
     private static final String BUNDLE_STEPS ="stepsDescription";
     private static final String RECIPE_NAME ="recipeName";
     private static final String BUNDLE_RECIPE_MODEL ="recipeModel";
@@ -75,10 +77,9 @@ public class RecipeStepsDescriptionFragment extends Fragment implements AdapterV
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if(DataUtil.isTwoPanel(getContext())){
-            RecipeVideoFragment recipeVideoFragment = RecipeVideoFragment.newInstance(mSelectedRecipe.getRecipeStepModelList().get(position).getVideoURL());
-            mFragmentManager.beginTransaction().add(R.id.recipe_video, recipeVideoFragment).commit();
-            RecipeStepsDetailFragment recipeStepSlideFragment = RecipeStepsDetailFragment.newInstance(mSelectedRecipe.getRecipeStepModelList().get(position).getDescription());
-            mFragmentManager.beginTransaction().add(R.id.recipe_steps_detail, recipeStepSlideFragment).commit();
+            Logger.d(TAG,"it is two panel so add video");
+            RecipeStepSlideFragment stepSlideFragment = RecipeStepSlideFragment.newInstance(mSelectedRecipe.getRecipeStepModelList().get(position));
+            mFragmentManager.beginTransaction().replace(R.id.recipe_video, stepSlideFragment).commit();
         }else{
             Intent destinationIntent = new Intent(getActivity(), RecipeDetailActivity.class);
             Bundle bundle = new Bundle();

@@ -5,7 +5,8 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by Namrata Shah on 5/8/2017.
  */
-
+/*transfer object for recipe step
+* */
 public class Step {
     @SerializedName("id")
     private int stepID;

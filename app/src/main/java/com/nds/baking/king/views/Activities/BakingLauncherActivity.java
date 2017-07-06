@@ -94,7 +94,7 @@ public class BakingLauncherActivity extends AppCompatActivity {
             hideProgressBar();
             ErrorMessageFragment errorMessageFragment =
                     ErrorMessageFragment.newInstance(getResources().getString(R.string.server_error_msg));
-            mFragmentManager.beginTransaction().replace(R.id.main_container, errorMessageFragment).commit();
+            mFragmentManager.beginTransaction().replace(R.id.main_container, errorMessageFragment, getResources().getString(R.string.error_fragment_tag)).commit();
         }
 
         @Override

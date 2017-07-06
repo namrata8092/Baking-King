@@ -14,7 +14,9 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isFocusable;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 /**
  * Created by Namrata Shah on 6/5/2017.
@@ -26,29 +28,21 @@ public class RecipeDetailActivityTest {
     ActivityTestRule<RecipeDetailActivity> recipeDetailActivity = new ActivityTestRule(RecipeDetailActivity.class);
 
     @Test
-    private void clickOnPreviousIconShowsPreviousRecipe(){
+    public void display_recipe_slide_when_activity_created(){
+        onView((withId(R.id.detailSlidePager))).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void click_on_previous_icon_move_to_previous_recipe(){
         onView((withId(R.id.previousButton))).check(matches(isClickable()));
         onView((withId(R.id.previousButton))).check(matches(isFocusable()));
-
-        onView((withId(R.id.previousButton)))
-                .perform(click());
+        onView((withId(R.id.previousButton))).perform(click());
     }
 
     @Test
-    private void clickOnNextIconShowsNextRecipe(){
+    public void click_on_next_icon_move_to_next_recipe(){
         onView((withId(R.id.nextButton))).check(matches(isClickable()));
         onView((withId(R.id.nextButton))).check(matches(isFocusable()));
-        onView((withId(R.id.previousButton)))
-                .perform(click());
-    }
-
-    @Test
-    private void previousIconDisableForFirstRecipe(){
-
-    }
-
-    @Test
-    private void nextIconDisableForLastRecipe(){
-
+        onView((withId(R.id.previousButton))).perform(click());
     }
 }

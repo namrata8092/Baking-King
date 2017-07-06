@@ -13,21 +13,26 @@ import com.nds.baking.king.net.tos.Ingredient;
 import com.nds.baking.king.net.tos.Recipe;
 import com.nds.baking.king.net.tos.Step;
 import com.orhanobut.logger.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Namrata Shah on 5/9/2017.
  */
-
+/*
+* RecipeConverter converts JSON response to model.
+* */
 public class RecipeConverter {
-private static final String TAG = RecipeConverter.class.getSimpleName();
+
+private static final String TAG = "TEST"+RecipeConverter.class.getSimpleName();
+
     public static RecipeResponseModel convert(String jsonResponse) {
-        Logger.d("received valid response ");
+        Logger.d(TAG,"received valid response ");
         JsonParser jsonParser = new JsonParser();
         if(jsonResponse == null)
             return null;
-        Logger.d("response is "+jsonResponse);
+        Logger.d(TAG,"response is "+jsonResponse);
         JsonElement jsonElement = jsonParser.parse(jsonResponse);
         JsonArray recipeList = jsonElement.getAsJsonArray();
         RecipeResponseModel responseModel = new RecipeResponseModel(toRecipeListModel(recipeList));
@@ -42,7 +47,7 @@ private static final String TAG = RecipeConverter.class.getSimpleName();
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         for(int i =0; i < recipeList.size(); i++){
-            Logger.d("iterate response ");
+            Logger.d(TAG,"iterate response ");
             Recipe recipe = gson.fromJson(recipeList.get(i), Recipe.class);
             RecipeModel model = new RecipeModel(Integer.toString(recipe.getID()),
                     recipe.getRecipeName(), toRecipeStepsListModel(recipe.getSteps()),
