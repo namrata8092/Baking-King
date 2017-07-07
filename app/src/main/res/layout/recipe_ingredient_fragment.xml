@@ -6,12 +6,6 @@
     android:layout_marginRight="@dimen/layout_left_right_margin"
     android:orientation="vertical">
 
-    <!--<TextView-->
-        <!--android:id="@+id/ingredientTitle"-->
-        <!--style="@style/ingredient_title"-->
-        <!--android:layout_margin="0dp"-->
-        <!--android:text="@string/ingredient_title"/>-->
-
     <LinearLayout
         android:id="@+id/ingredientsList"
         android:layout_width="match_parent"

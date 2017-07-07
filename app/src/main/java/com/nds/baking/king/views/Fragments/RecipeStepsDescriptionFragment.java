@@ -18,6 +18,7 @@ import com.nds.baking.king.models.RecipeModel;
 import com.nds.baking.king.models.RecipeStepModel;
 import com.nds.baking.king.utils.DataUtil;
 import com.nds.baking.king.views.Activities.RecipeDetailActivity;
+import com.nds.baking.king.views.RecyclerViewItemDivider;
 import com.nds.baking.king.views.adapter.RecipeStepsDescriptionAdapter;
 import com.orhanobut.logger.Logger;
 
@@ -58,6 +59,10 @@ public class RecipeStepsDescriptionFragment extends Fragment implements AdapterV
         mRecipeStepsList = (RecyclerView) view.findViewById(R.id.recipe_steps_description);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecipeStepsList.setLayoutManager(linearLayoutManager);
+
+        RecyclerViewItemDivider divider = new RecyclerViewItemDivider(getContext(), LinearLayoutManager.VERTICAL);
+        mRecipeStepsList.addItemDecoration(divider);
+
         mRecipeStepsList.setAdapter(mStepsDescriptionAdapter);
         return view;
     }
