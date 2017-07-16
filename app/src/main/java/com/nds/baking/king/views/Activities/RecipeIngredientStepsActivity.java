@@ -46,8 +46,10 @@ public class RecipeIngredientStepsActivity extends AppCompatActivity {
             Bundle bundle = getIntent().getBundleExtra(RECIPE_BUNDLE);
             mSelectedRecipe = (RecipeModel)bundle.get(SELECTED_RECIPE_BUNDLE_KEY);
         }
-        setIngredientsAndStepDescription(mSelectedRecipe, mFragmentManager);
-        setTitle(mSelectedRecipe.getRecipeName());
+        if(mSelectedRecipe!=null){
+            setIngredientsAndStepDescription(mSelectedRecipe, mFragmentManager);
+            setTitle(mSelectedRecipe.getRecipeName());
+        }
     }
 
     private void setIngredientsAndStepDescription(RecipeModel mSelectedRecipe, FragmentManager mFragmentManager) {

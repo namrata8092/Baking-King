@@ -22,7 +22,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 @RunWith(AndroidJUnit4.class)
 public class RecipeIngredientStepsActivityTest {
     @Rule
-    ActivityTestRule<RecipeIngredientStepsActivity> recipeIngredientStepsActivity = new ActivityTestRule<>(RecipeIngredientStepsActivity.class);
+    public ActivityTestRule<RecipeIngredientStepsActivity> recipeIngredientStepsActivity = new ActivityTestRule<>(RecipeIngredientStepsActivity.class);
 
     @Test
     public void display_ingredients_title(){

@@ -29,7 +29,8 @@ public class RecipeIngredientsFragment extends Fragment {
     public static RecipeIngredientsFragment newInstance(RecipeModel mSelectedRecipe) {
         RecipeIngredientsFragment fragment = new RecipeIngredientsFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(BUNDLE_RECIPE_INGREDIENT, (ArrayList<? extends Parcelable>) mSelectedRecipe.getRecipeIngredientModelList());
+        if(mSelectedRecipe!=null && mSelectedRecipe.getRecipeIngredientModelList()!=null)
+            bundle.putParcelableArrayList(BUNDLE_RECIPE_INGREDIENT, (ArrayList<? extends Parcelable>) mSelectedRecipe.getRecipeIngredientModelList());
         fragment.setArguments(bundle);
         return fragment;
     }

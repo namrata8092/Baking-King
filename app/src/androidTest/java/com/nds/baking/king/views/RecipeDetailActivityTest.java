@@ -25,7 +25,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 public class RecipeDetailActivityTest {
 
     @Rule
-    ActivityTestRule<RecipeDetailActivity> recipeDetailActivity = new ActivityTestRule(RecipeDetailActivity.class);
+    public ActivityTestRule<RecipeDetailActivity> recipeDetailActivity = new ActivityTestRule(RecipeDetailActivity.class);
 
     @Test
     public void display_recipe_slide_when_activity_created(){
@@ -34,6 +34,7 @@ public class RecipeDetailActivityTest {
 
     @Test
     public void click_on_previous_icon_move_to_previous_recipe(){
+        onView((withId(R.id.previousButton))).check(matches(isDisplayed()));
         onView((withId(R.id.previousButton))).check(matches(isClickable()));
         onView((withId(R.id.previousButton))).check(matches(isFocusable()));
         onView((withId(R.id.previousButton))).perform(click());
@@ -41,6 +42,7 @@ public class RecipeDetailActivityTest {
 
     @Test
     public void click_on_next_icon_move_to_next_recipe(){
+        onView((withId(R.id.nextButton))).check(matches(isDisplayed()));
         onView((withId(R.id.nextButton))).check(matches(isClickable()));
         onView((withId(R.id.nextButton))).check(matches(isFocusable()));
         onView((withId(R.id.previousButton))).perform(click());

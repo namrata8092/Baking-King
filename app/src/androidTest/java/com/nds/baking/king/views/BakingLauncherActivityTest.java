@@ -31,8 +31,4 @@ public class BakingLauncherActivityTest {
         onView(allOf(withId(R.id.main_container))).check(matches(isDisplayed()));
     }
 
-    @Test
-    public void display_progressbar_when_fetching_data() {
-        onView(withId(R.id.progress)).check(matches(isDisplayed()));
-    }
 }

@@ -54,8 +54,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements View.OnCl
         }
 
         setTitle(mTitle);
-
-        mTotalSteps = mRecipeStepModelList.size();
+        if(mRecipeStepModelList!=null)
+            mTotalSteps = mRecipeStepModelList.size();
         mRecipeDetailViewPager = (ViewPager)findViewById(R.id.detailSlidePager);
 
         mPreviousButton = (ImageButton)findViewById(R.id.previousButton);
