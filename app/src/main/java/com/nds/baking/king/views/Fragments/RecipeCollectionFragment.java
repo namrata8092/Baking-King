@@ -66,7 +66,8 @@ public class RecipeCollectionFragment extends Fragment implements AdapterView.On
         if(getArguments()!=null){
             recipeResponseModel = getArguments().getParcelable(RECIPE_COLLECTION_BUNDLE_KEY);
         }
-        recipes = recipeResponseModel.getRecipes();
+        if(recipeResponseModel!=null)
+            recipes = recipeResponseModel.getRecipes();
     }
 
     @Override

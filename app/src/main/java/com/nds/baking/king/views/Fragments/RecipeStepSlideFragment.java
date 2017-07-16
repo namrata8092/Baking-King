@@ -68,10 +68,12 @@ public class RecipeStepSlideFragment extends Fragment implements ExoPlayer.Event
         if (getArguments() != null) {
             recipeStepModel = getArguments().getParcelable(BUNDLE_SELECTED_STEP);
         }
-        mVideoUrl = recipeStepModel.getVideoURL();
-        mStepDetail = recipeStepModel.getDescription();
-        Logger.d(TAG," add video to slide");
-        Logger.d(TAG,"mVideoUrl "+mVideoUrl+"mRecipeDescription "+mStepDetail);
+        if(recipeStepModel!=null){
+            mVideoUrl = recipeStepModel.getVideoURL();
+            mStepDetail = recipeStepModel.getDescription();
+            Logger.d(TAG," add video to slide");
+            Logger.d(TAG,"mVideoUrl "+mVideoUrl+"mRecipeDescription "+mStepDetail);
+        }
     }
 
     @Nullable
@@ -167,6 +169,8 @@ public class RecipeStepSlideFragment extends Fragment implements ExoPlayer.Event
 
 
     private void initializeExpoPlayer(@NonNull String videoUri) {
+        if(videoUri== null)
+            return;
         Logger.d(TAG,"initializeExpoPlayer "+videoUri);
         if (mSimpleExpoPlayer == null) {
             TrackSelector trackSelector = new DefaultTrackSelector();
@@ -185,9 +189,11 @@ public class RecipeStepSlideFragment extends Fragment implements ExoPlayer.Event
 
     private void resetExpoPlayer() {
         Logger.d(TAG,"resetExpoPlayer");
-        mSimpleExpoPlayer.stop();
-        mSimpleExpoPlayer.release();
-        mSimpleExpoPlayer = null;
+        if(mSimpleExpoPlayer!=null){
+            mSimpleExpoPlayer.stop();
+            mSimpleExpoPlayer.release();
+            mSimpleExpoPlayer = null;
+        }
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.nds.baking.king.views;
 
-import android.support.test.espresso.ViewAssertion;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.nds.baking.king.FragmentTestRule;
@@ -15,7 +14,6 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
  * Created by Namrata Shah on 6/5/2017.
@@ -30,8 +28,6 @@ public class RecipeStepSlideFragmentTest {
     public void display_recipe_step_slide_fragment() {
         mFragmentTestRule.launchActivity(null);
         onView(withId(R.id.main_container)).check(matches(isDisplayed()));
-        onView(withId(R.id.recipeSimpleExpoPlayerView)).check(matches(isDisplayed()));
         onView(withId(R.id.recipeStep)).check(matches(isDisplayed()));
-        onView(withId(R.id.recipeStep)).check((ViewAssertion) withText("Mix oil"));
     }
 }

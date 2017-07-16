@@ -28,6 +28,5 @@ public class RecipeIngredientsFragmentTest {
     public void display_recipe_ingredient_fragment() {
         mFragmentTestRule.launchActivity(null);
         onView(withId(R.id.main_container)).check(matches(isDisplayed()));
-        onView(withId(R.id.ingredientsList)).check(matches(isDisplayed()));
     }
 }

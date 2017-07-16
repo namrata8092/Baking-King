@@ -30,12 +30,11 @@ public class FragmentTestRule<F extends Fragment> extends ActivityTestRule<TestA
 
         getActivity().runOnUiThread(() -> {
             try {
-                //Instantiate and insert the fragment into the container layout
                 FragmentManager manager = getActivity().getSupportFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
                 mFragment = mFragmentClass.newInstance();
                 transaction.replace(R.id.main_container, mFragment);
-                transaction.commit();
+                transaction.commitAllowingStateLoss();
             } catch (InstantiationException | IllegalAccessException e) {
                 Assert.fail(String.format("%s: Could not insert %s into TestActivity: %s",
                         getClass().getSimpleName(),

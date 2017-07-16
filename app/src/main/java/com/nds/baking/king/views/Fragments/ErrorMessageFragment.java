@@ -32,7 +32,7 @@ public class ErrorMessageFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if(savedInstanceState != null && savedInstanceState.containsKey(ERROR_MSG_KEY))
             errorMsg = savedInstanceState.getString(ERROR_MSG_KEY);
-        else if(getArguments().getString(ERROR_MSG_KEY)!=null)
+        else if(getArguments()!=null && getArguments().getString(ERROR_MSG_KEY)!=null)
             errorMsg = getArguments().getString(ERROR_MSG_KEY);
     }
 

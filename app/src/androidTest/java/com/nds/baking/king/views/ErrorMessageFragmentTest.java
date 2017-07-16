@@ -15,7 +15,6 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
  * Created by Namrata Shah on 6/5/2017.
@@ -30,7 +29,6 @@ public class ErrorMessageFragmentTest {
     public void display_error_fragment() {
         mFragmentTestRule.launchActivity(null);
         onView(withId(R.id.main_container)).check(matches(isDisplayed()));
-        onView(withId(R.id.errorMessageTV)).check(matches(withText("this is error msg")));
         onView(withId(R.id.okButton)).check(matches(isDisplayed())).perform(click());
     }
 }

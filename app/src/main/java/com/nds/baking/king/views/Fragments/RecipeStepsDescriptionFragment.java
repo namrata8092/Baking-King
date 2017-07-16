@@ -75,8 +75,10 @@ public class RecipeStepsDescriptionFragment extends Fragment implements AdapterV
         if(getArguments()!=null){
             mSelectedRecipe = getArguments().getParcelable(BUNDLE_RECIPE_MODEL);
         }
-        mRecipeStepModelList = mSelectedRecipe.getRecipeStepModelList();
-        mStepsDescriptionAdapter = new RecipeStepsDescriptionAdapter(getContext(), mRecipeStepModelList, this);
+        if(mSelectedRecipe!=null){
+            mRecipeStepModelList = mSelectedRecipe.getRecipeStepModelList();
+            mStepsDescriptionAdapter = new RecipeStepsDescriptionAdapter(getContext(), mRecipeStepModelList, this);
+        }
     }
 
     @Override
