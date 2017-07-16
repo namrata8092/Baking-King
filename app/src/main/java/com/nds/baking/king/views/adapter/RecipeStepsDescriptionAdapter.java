@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.nds.baking.king.R;
 import com.nds.baking.king.models.RecipeStepModel;
 
@@ -38,7 +40,14 @@ public class RecipeStepsDescriptionAdapter extends RecyclerView.Adapter<RecipeSt
 
     @Override
     public void onBindViewHolder(RecipeStepsViewHolder holder, int position) {
-        holder.recipeStep.setText(mRecipeStepModelList.get(position).getShortDescription());
+        RecipeStepModel recipeStepModel = mRecipeStepModelList.get(position);
+        holder.recipeStep.setText(recipeStepModel.getShortDescription());
+        if(recipeStepModel.isWithThumbNailURL())
+            Glide.with(mContext).load(recipeStepModel.getThumbNailURL()).error(R.drawable.ic_launcher).into(holder.recipeThumbnail);
+        else{
+            int drawable = position%2 != 0? R.drawable.cake : R.drawable.donut;
+            holder.recipeThumbnail.setBackgroundDrawable(mContext.getResources().getDrawable(drawable));
+        }
     }
 
 
@@ -51,10 +60,12 @@ public class RecipeStepsDescriptionAdapter extends RecyclerView.Adapter<RecipeSt
 
     public class RecipeStepsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView recipeStep;
+        ImageView recipeThumbnail;
 
         public RecipeStepsViewHolder(View itemView) {
             super(itemView);
             recipeStep = (TextView)itemView.findViewById(R.id.recipeStep);
+            recipeThumbnail = (ImageView)itemView.findViewById(R.id.recipe_thumbnail);
             itemView.setOnClickListener(this);
         }
 
