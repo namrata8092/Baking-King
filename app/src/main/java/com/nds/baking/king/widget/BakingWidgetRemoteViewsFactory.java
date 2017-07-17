@@ -9,6 +9,7 @@ import android.widget.RemoteViewsService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nds.baking.king.R;
+import com.nds.baking.king.models.RecipeIngredientModel;
 import com.nds.baking.king.models.RecipeModel;
 import com.nds.baking.king.models.RecipeResponseModel;
 import com.orhanobut.logger.Logger;
@@ -65,16 +66,14 @@ public class BakingWidgetRemoteViewsFactory implements RemoteViewsService.Remote
     @Override
     public RemoteViews getViewAt(int position) {
         Logger.d( TAG,"BakingWidgetRemoteViewsFactory getViewAt");
-        RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.recipe_widget_grid_cell);
-        views.setTextViewText(R.id.recipeName, recipeModelList.get(position).getRecipeName());
-        views.setTextViewText(R.id.recipeServing, "Serving : "+recipeModelList.get(position).getServings());
+        RecipeModel selectedRecipe = responseModel.getRecipes().get(0);
+        RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.widget_list_row);
+        RecipeIngredientModel recipeIngredientModel = selectedRecipe.getRecipeIngredientModelList().get(position);
 
-        if(position%2 != 0)
-            views.setImageViewResource(R.id.recipeIcon, R.drawable.cake);
-        else
-            views.setImageViewResource(R.id.recipeIcon, R.drawable.donut);
+        views.setTextViewText(R.id.ingredient_name,recipeIngredientModel.getIngredientName());
+        views.setTextViewText(R.id.ingredient_quantity,recipeIngredientModel.getIngredientQuantity());
+        views.setTextViewText(R.id.ingredient_unit,recipeIngredientModel.getIngredientMeasure());
 
-        RecipeModel selectedRecipe = responseModel.getRecipes().get(position);
         Bundle bundle = new Bundle();
         bundle.putParcelable(SELECTED_RECIPE_BUNDLE_KEY, selectedRecipe);
         Intent recipeDetailIntent = new Intent();

@@ -48,28 +48,33 @@ public class BakingWidgetProvider extends AppWidgetProvider {
         Bundle widgetDetails = appWidgetManager.getAppWidgetOptions(appWidgetIds);
         int widgetWidth = widgetDetails.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
         Logger.d(TAG,"width is "+widgetWidth+" appWidgetIds "+appWidgetIds);
-        if(widgetWidth < WIDGET_MIN_WIDTH){
-            views = getSingleRecipeView(context, 0, recipeResponseModel);
-        }else{
-            views = getRecipeGridView(context, appWidgetIds, recipeResponseModel);
-        }
+//        if(widgetWidth < WIDGET_MIN_WIDTH){
+//            views = getSingleRecipeView(context, 0, recipeResponseModel);
+//        }else{
+//            views = getRecipeGridView(context, appWidgetIds, recipeResponseModel);
+//        }
+        views = getRecipeGridView(context, appWidgetIds, recipeResponseModel);
         appWidgetManager.updateAppWidget(appWidgetIds, views);
     }
 
     private static RemoteViews getRecipeGridView(Context context, int appWidgetIds,
                                                  RecipeResponseModel recipeResponseModel) {
         Logger.d(TAG,"getRecipeGridView");
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_grid_layout);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
+        views.setTextViewText(R.id.recipeName,recipeResponseModel.getRecipes().get(0).getRecipeName());
+        views.setTextViewText(R.id.recipeServing, "servings : "+recipeResponseModel.getRecipes().get(0).getServings());
+        views.setImageViewResource(R.id.recipeIcon, R.drawable.ic_launcher);
+
         Intent intent = new Intent(context, BakingRemoteViewService.class);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds);
         intent.putExtra(RECIPE_BUNDLE, (new Gson().toJson(recipeResponseModel)).toString());
-        views.setRemoteAdapter( R.id.recipe_grid_view, intent);
+        views.setRemoteAdapter( R.id.recipe_ingredients_list, intent);
 
         Intent appIntent = new Intent(context, RecipeIngredientStepsActivity.class);
         PendingIntent appPendingIntent = PendingIntent.getActivity(context, 0, appIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        views.setPendingIntentTemplate(R.id.recipe_grid_view, appPendingIntent);
+        views.setPendingIntentTemplate(R.id.recipe_ingredients_list, appPendingIntent);
 
-        views.setEmptyView(R.id.recipe_grid_view, R.id.empty_view);
+//        views.setEmptyView(R.id.recipe_grid_view, R.id.empty_view);
 
         return views;
     }
