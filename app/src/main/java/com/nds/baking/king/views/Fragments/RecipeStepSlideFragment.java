@@ -13,11 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
-import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
@@ -174,8 +172,7 @@ public class RecipeStepSlideFragment extends Fragment implements ExoPlayer.Event
         Logger.d(TAG,"initializeExpoPlayer "+videoUri);
         if (mSimpleExpoPlayer == null) {
             TrackSelector trackSelector = new DefaultTrackSelector();
-            LoadControl loadControl = new DefaultLoadControl();
-            mSimpleExpoPlayer = ExoPlayerFactory.newSimpleInstance(getActivity(), trackSelector, loadControl);
+            mSimpleExpoPlayer = ExoPlayerFactory.newSimpleInstance(getActivity(), trackSelector);
             mSimpleExpoPlayerView.setPlayer(mSimpleExpoPlayer);
             mSimpleExpoPlayer.addListener(this);
             String userAgent = Util.getUserAgent(getActivity(), "bakingking");

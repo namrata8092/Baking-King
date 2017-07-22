@@ -1,6 +1,7 @@
 package com.nds.baking.king.views.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.nds.baking.king.R;
 import com.nds.baking.king.models.RecipeModel;
+import com.nds.baking.king.utils.DrawableUtil;
 
 import java.util.List;
 
@@ -45,8 +47,9 @@ public class RecipeCollectionAdapter extends RecyclerView.Adapter<RecipeCollecti
         if(recipeModel.isImgURL())
             Glide.with(mContext).load(recipeModel.getRecipeImgURL()).error(R.drawable.ic_launcher).into(holder.mRecipeIcon);
         else{
-            int drawable = position%2 != 0? R.drawable.cake : R.drawable.donut;
-            holder.mRecipeIcon.setBackgroundDrawable(mContext.getResources().getDrawable(drawable));
+            int drawableID = position%2 != 0? R.drawable.cake : R.drawable.donut;
+            Drawable drawable = DrawableUtil.getDrawableImage(mContext, drawableID);
+            DrawableUtil.setDrawableToImageView(drawable, holder.mRecipeIcon);
         }
     }
 
