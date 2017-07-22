@@ -15,7 +15,6 @@ import com.nds.baking.king.R;
 import com.nds.baking.king.models.RecipeModel;
 import com.nds.baking.king.models.RecipeResponseModel;
 import com.nds.baking.king.services.BakingRemoteViewService;
-import com.nds.baking.king.views.Activities.BakingLauncherActivity;
 import com.nds.baking.king.views.Activities.RecipeIngredientStepsActivity;
 import com.orhanobut.logger.Logger;
 
@@ -29,31 +28,23 @@ public class BakingWidgetProvider extends AppWidgetProvider {
 
     private static final String TAG=BakingWidgetProvider.class.getSimpleName();
     private static RecipeResponseModel recipeResponseModel;
-    private static final String SELECTED_RECIPE_BUNDLE_KEY = "selectedRecipe";
     private static final String RECIPE_BUNDLE="recipeBundle";
-    private static final int WIDGET_MIN_WIDTH = 300;
+    private static final String RECIPE_INDEX_KEY="index";
+    private static int RECIPE_INDEX = 0;
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
-        Logger.d(TAG,"onUpdate called");
+        Logger.d(TAG,"onUpdate called "+RECIPE_INDEX);
         startBakingWidgetService(context);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public static void updateWidget(Context context, AppWidgetManager appWidgetManager,
                                     int appWidgetIds, RecipeResponseModel responseModel) {
+        Logger.d(TAG,"updateWidget called "+RECIPE_INDEX);
         recipeResponseModel = responseModel;
-        RemoteViews views;
-        Bundle widgetDetails = appWidgetManager.getAppWidgetOptions(appWidgetIds);
-        int widgetWidth = widgetDetails.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
-        Logger.d(TAG,"width is "+widgetWidth+" appWidgetIds "+appWidgetIds);
-//        if(widgetWidth < WIDGET_MIN_WIDTH){
-//            views = getSingleRecipeView(context, 0, recipeResponseModel);
-//        }else{
-//            views = getRecipeGridView(context, appWidgetIds, recipeResponseModel);
-//        }
-        views = getRecipeGridView(context, appWidgetIds, recipeResponseModel);
+        RemoteViews views = getRecipeGridView(context, appWidgetIds, recipeResponseModel);
         appWidgetManager.updateAppWidget(appWidgetIds, views);
     }
 
@@ -61,12 +52,21 @@ public class BakingWidgetProvider extends AppWidgetProvider {
                                                  RecipeResponseModel recipeResponseModel) {
         Logger.d(TAG,"getRecipeGridView");
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
-        views.setTextViewText(R.id.recipeName,recipeResponseModel.getRecipes().get(0).getRecipeName());
-        views.setTextViewText(R.id.recipeServing, "servings : "+recipeResponseModel.getRecipes().get(0).getServings());
+        if(RECIPE_INDEX < 4 && RECIPE_INDEX >= 0){
+            Logger.d(TAG,"condition 1");
+            RECIPE_INDEX++;
+        }else if(RECIPE_INDEX <= 1){
+            Logger.d(TAG,"condition 2");
+            RECIPE_INDEX--;
+        }
+        RecipeModel recipeModel = recipeResponseModel.getRecipes().get(RECIPE_INDEX);
+        views.setTextViewText(R.id.recipeName,recipeModel.getRecipeName());
+        views.setTextViewText(R.id.recipeServing, "servings : "+recipeModel.getServings());
         views.setImageViewResource(R.id.recipeIcon, R.drawable.ic_launcher);
 
         Intent intent = new Intent(context, BakingRemoteViewService.class);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds);
+        intent.putExtra(RECIPE_INDEX_KEY,RECIPE_INDEX);
         intent.putExtra(RECIPE_BUNDLE, (new Gson().toJson(recipeResponseModel)).toString());
         views.setRemoteAdapter( R.id.recipe_ingredients_list, intent);
 
@@ -74,30 +74,10 @@ public class BakingWidgetProvider extends AppWidgetProvider {
         PendingIntent appPendingIntent = PendingIntent.getActivity(context, 0, appIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         views.setPendingIntentTemplate(R.id.recipe_ingredients_list, appPendingIntent);
 
-//        views.setEmptyView(R.id.recipe_grid_view, R.id.empty_view);
-
         return views;
     }
 
-    private static RemoteViews getSingleRecipeView(Context context, int recipeID,
-                                                   RecipeResponseModel responseModel) {
-        Logger.d(TAG,"getSingleRecipeView");
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_initial_layout);
-        Intent intent=null;
-        if(recipeID < 0){
-            intent = new Intent(context, BakingLauncherActivity.class);
-        }else{
-            intent = new Intent(context, RecipeIngredientStepsActivity.class);
-            RecipeModel selectedRecipe = responseModel.getRecipes().get(recipeID);
-            Bundle bundle = new Bundle();
-            bundle.putParcelable(SELECTED_RECIPE_BUNDLE_KEY, selectedRecipe);
-            intent.putExtra(RECIPE_BUNDLE, bundle);
-            views.setImageViewResource(R.id.recipeIcon, R.drawable.ic_launcher);
-        }
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-        views.setOnClickPendingIntent(R.id.recipeIcon, pendingIntent);
-        return views;
-    }
+
 
     @Override
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager,
@@ -105,5 +85,11 @@ public class BakingWidgetProvider extends AppWidgetProvider {
         startBakingWidgetService(context);
         Logger.d(TAG,"onAppWidgetOptionsChanged called");
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Logger.d(TAG,"onReceive called "+RECIPE_INDEX);
+        super.onReceive(context, intent);
     }
 }

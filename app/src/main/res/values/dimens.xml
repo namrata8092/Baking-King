@@ -5,10 +5,13 @@
     <dimen name="recipe_description_margin">10dp</dimen>
     <dimen name="progressbar_size">48dp</dimen>
     <dimen name="font_very_small">12sp</dimen>
+    <dimen name="font_tiny">8sp</dimen>
     <dimen name="font_small">14sp</dimen>
     <dimen name="font_medium">16sp</dimen>
     <dimen name="layout_left_right_margin">10dp</dimen>
     <dimen name="widget_margin">8dp</dimen>
+    <dimen name="widget_left_margin">8dp</dimen>
+    <dimen name="widget_right_margin">8dp</dimen>
     <dimen name="recycler_divider_width">1dp</dimen>
     <dimen name="recipe_thumbnail_height_width">36dp</dimen>
 </resources>

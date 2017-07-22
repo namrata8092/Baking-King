@@ -19,10 +19,15 @@
     </style>
 
     <style name="Recipe_Icon">
-        <item name="android:layout_width">@dimen/recipe_thumbnail_height_width</item>
-        <item name="android:layout_height">@dimen/recipe_thumbnail_height_width</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:layout_margin">@dimen/recipe_title_margin</item>
         <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="widget_recipe_Icon" parent="Recipe_Icon">
+        <item name="android:layout_width">@dimen/recipe_thumbnail_height_width</item>
+        <item name="android:layout_height">@dimen/recipe_thumbnail_height_width</item>
     </style>
 
     <style name="ingredient_title">

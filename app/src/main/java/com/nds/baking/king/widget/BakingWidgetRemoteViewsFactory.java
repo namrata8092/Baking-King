@@ -24,18 +24,23 @@ public class BakingWidgetRemoteViewsFactory implements RemoteViewsService.Remote
     private static final String TAG = "TEST"+BakingWidgetRemoteViewsFactory.class.getSimpleName();
     private RecipeResponseModel responseModel;
     private List<RecipeModel> recipeModelList;
+    private List<RecipeIngredientModel> ingredientModelList;
     private Context mContext;
     private static final String RECIPE_BUNDLE="recipeBundle";
     private static final String SELECTED_RECIPE_BUNDLE_KEY = "selectedRecipe";
+    private static final String RECIPE_INDEX_KEY="index";
+    private int INDEX = 0;
 
     public BakingWidgetRemoteViewsFactory(Context applicationContext, Intent intent) {
         Logger.d( TAG,"BakingWidgetRemoteViewsFactory constrctor");
         this.mContext = applicationContext;
         String recipes = intent.getStringExtra(RECIPE_BUNDLE);
+        INDEX = intent.getIntExtra(RECIPE_INDEX_KEY,0);
         Logger.d(TAG,"received recipes "+recipes);
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         this.responseModel = gson.fromJson(recipes, RecipeResponseModel.class);
         this.recipeModelList = responseModel.getRecipes();
+        this.ingredientModelList = recipeModelList.get(INDEX).getRecipeIngredientModelList();
     }
 
     @Override
@@ -58,15 +63,15 @@ public class BakingWidgetRemoteViewsFactory implements RemoteViewsService.Remote
     @Override
     public int getCount() {
         Logger.d( TAG,"BakingWidgetRemoteViewsFactory getCount");
-        if(recipeModelList!=null)
-            return recipeModelList.size();
+        if(ingredientModelList!=null)
+            return ingredientModelList.size();
         return 0;
     }
 
     @Override
     public RemoteViews getViewAt(int position) {
-        Logger.d( TAG,"BakingWidgetRemoteViewsFactory getViewAt");
-        RecipeModel selectedRecipe = responseModel.getRecipes().get(0);
+        Logger.d( TAG,"BakingWidgetRemoteViewsFactory getViewAt "+INDEX);
+        RecipeModel selectedRecipe = responseModel.getRecipes().get(INDEX);
         RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.widget_list_row);
         RecipeIngredientModel recipeIngredientModel = selectedRecipe.getRecipeIngredientModelList().get(position);
 
@@ -78,7 +83,7 @@ public class BakingWidgetRemoteViewsFactory implements RemoteViewsService.Remote
         bundle.putParcelable(SELECTED_RECIPE_BUNDLE_KEY, selectedRecipe);
         Intent recipeDetailIntent = new Intent();
         recipeDetailIntent.putExtra(RECIPE_BUNDLE, bundle);
-        views.setOnClickFillInIntent(R.id.recipeIcon,recipeDetailIntent);
+        views.setOnClickFillInIntent(R.id.widget_list_row_parent,recipeDetailIntent);
         return views;
     }
 

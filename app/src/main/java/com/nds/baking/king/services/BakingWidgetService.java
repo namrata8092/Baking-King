@@ -6,8 +6,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
-import android.util.Log;
-
 import com.nds.baking.king.BakingApplication;
 import com.nds.baking.king.BuildConfig;
 import com.nds.baking.king.R;
