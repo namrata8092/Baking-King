@@ -1,0 +1,70 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="Recipe_title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/recipe_title</item>
+        <item name="android:layout_margin">@dimen/recipe_title_margin</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Recipe_Icon">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_margin">@dimen/recipe_title_margin</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="widget_recipe_Icon" parent="Recipe_Icon">
+        <item name="android:layout_width">@dimen/recipe_thumbnail_height_width</item>
+        <item name="android:layout_height">@dimen/recipe_thumbnail_height_width</item>
+    </style>
+
+    <style name="ingredient_title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/recipe_title</item>
+        <item name="android:layout_margin">@dimen/recipe_title_margin</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">left</item>
+    </style>
+
+    <style name="ingredient_text">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/font_very_small</item>
+        <item name="android:layout_margin">@dimen/recipe_title_margin</item>
+        <item name="android:textColor">@color/darkGrey</item>
+        <item name="android:gravity">left</item>
+    </style>
+
+    <style name="recipe_step">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/font_very_small</item>
+        <item name="android:layout_margin">@dimen/recipe_title_margin</item>
+        <item name="android:textColor">@color/darkGrey</item>
+        <item name="android:gravity">left</item>
+    </style>
+
+    <style name="recipe_step_description">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/font_medium</item>
+        <item name="android:layout_margin">@dimen/recipe_description_margin</item>
+        <item name="android:textColor">@color/darkGrey</item>
+        <item name="android:gravity">left</item>
+        <item name="android:layout_marginLeft">10dp</item>
+    </style>
+</resources>
